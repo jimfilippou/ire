@@ -2,7 +2,6 @@ package utils
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"ire/models"
 	"os"
@@ -33,7 +32,6 @@ func getNodes(data []byte) []models.Node {
 
 	for i := 1; i <= len(chunks)-1; i++ {
 		tokens := strings.Split(chunks[i], "\n")
-		fmt.Print(tokens)
 		nodes = append(nodes, models.Node{
 			ID:   tokens[1],
 			Text: tokens[2],
@@ -49,6 +47,7 @@ func getNodes(data []byte) []models.Node {
 func CreateFile() error {
 
 	fileName := "C:\\Users\\Elias\\go\\src\\ire\\data\\documents.txt"
+	outputFi := "C:\\Users\\Elias\\go\\src\\ire\\data\\documents.json"
 
 	err := checkFile(fileName)
 	if err != nil {
@@ -60,13 +59,6 @@ func CreateFile() error {
 		return err
 	}
 
-	var data []models.Node
-
-	err = json.Unmarshal(file, &data)
-	if err != nil {
-		return err
-	}
-
 	nodes := getNodes(file)
 
 	output, err := json.MarshalIndent(nodes, "", " ")
@@ -74,8 +66,10 @@ func CreateFile() error {
 		return err
 	}
 
-	err = ioutil.WriteFile("test.json", output, 0644)
+	err = ioutil.WriteFile(outputFi, output, 0644)
 	if err != nil {
 		return err
 	}
+
+	return nil
 }

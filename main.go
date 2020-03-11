@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/jimfilippou/ire/utils"
 	"github.com/urfave/cli"
-	"ire/utils"
 	"log"
 	"os"
 	"time"

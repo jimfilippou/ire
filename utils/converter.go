@@ -2,8 +2,8 @@ package utils
 
 import (
 	"encoding/json"
+	"github.com/jimfilippou/ire/models"
 	"io/ioutil"
-	"ire/models"
 	"os"
 	"strings"
 )
@@ -46,8 +46,8 @@ func getNodes(data []byte) []models.Node {
 */
 func CreateFile() error {
 
-	fileName := "C:\\Users\\Elias\\go\\src\\ire\\data\\documents.txt"
-	outputFi := "C:\\Users\\Elias\\go\\src\\ire\\data\\documents.json"
+	fileName := "/Users/jimfilippou/go/src/github.com/jimfilippou/ire/data/documents.txt"
+	outputFi := "/Users/jimfilippou/go/src/github.com/jimfilippou/ire/data/documents.json"
 
 	err := checkFile(fileName)
 	if err != nil {

@@ -2,28 +2,19 @@ package utils
 
 import (
 	"encoding/json"
-	"fmt"
-	"github.com/elastic/go-elasticsearch/v8"
+	"github.com/jimfilippou/ire/models"
+	log "github.com/sirupsen/logrus"
 	"io/ioutil"
-	"ire/models"
-	"strings"
 )
 
 func insertDocument(node *models.Node, index *int) error {
-
-	es, err := elasticsearch.NewDefaultClient()
-	if err != nil {
-		return err
-	}
-
-	_, _ = es.Create("ire", node.ID, strings.NewReader(fmt.Sprintf("%v", node)))
-
+	log.Info(node.ID)
 	return nil
 }
 
 func FeedTheDB() error {
 
-	fileName := "C:\\Users\\Elias\\go\\src\\ire\\data\\documents.json"
+	fileName := "/Users/jimfilippou/go/src/github.com/jimfilippou/ire/data/documents.json"
 	var nodes []models.Node
 
 	file, err := ioutil.ReadFile(fileName)

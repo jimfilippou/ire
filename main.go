@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/jimfilippou/ire/utils"
 	"github.com/urfave/cli"
+	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -15,6 +16,7 @@ func main() {
 	app.Name = "ire"
 	app.Usage = "Information Retrieval Project 2020"
 	app.Version = "0.0.1"
+	cli.ErrWriter = ioutil.Discard
 	app.Authors = []cli.Author{
 		{
 			Name:  "Jim Filippou",

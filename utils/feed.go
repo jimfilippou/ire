@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020.
+ * Jim Filippou · jimfilippou8@gmail.com
+ */
+
 package utils
 
 import (
@@ -50,7 +55,7 @@ func FeedTheDB() error {
 
 	for _, node := range nodes {
 		node.Timestamp = time.Now().Unix()
-		req, err := prepareDocumentRequest(&node)
+		req, err := prepareDocumentRequest(node)
 		bulk.Add(&req)
 		if err != nil {
 			return err
@@ -89,11 +94,13 @@ func FeedTheDB() error {
 	return nil
 }
 
-func prepareDocumentRequest(node *models.Node) (elastic.BulkIndexRequest, error) {
+// Prepares a document index request which will
+// be later added to a BulkRequest
+func prepareDocumentRequest(node models.Node) (elastic.BulkIndexRequest, error) {
 	req := elastic.NewBulkIndexRequest()
 	req.OpType("index")
 	req.Id(node.ID)
-	req.Doc(&node)
+	req.Doc(node)
 	req.Index("ire")
 	return *req, nil
 }

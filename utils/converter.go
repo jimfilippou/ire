@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020.
+ * Jim Filippou · jimfilippou8@gmail.com
+ */
+
 package utils
 
 import (
@@ -19,6 +24,8 @@ func checkFile(filename string) error {
 	return nil
 }
 
+// Gets a text file as an input, splits the contents and assigns them
+// to nodes, which will be later iterated through
 func getNodes(data []byte) []models.Node {
 	var nodes []models.Node
 	text := string(data)
@@ -40,10 +47,8 @@ func getNodes(data []byte) []models.Node {
 	return nodes
 }
 
-/*
-	This public function converts "documents.txt" to "documents.json"
-	in order to make them accessible to the
-*/
+//	This public function converts "documents.txt" to "documents.json"
+//	in order to make them accessible to the "Feed" utility.
 func CreateFile() error {
 
 	fileName := "/Users/jimfilippou/go/src/github.com/jimfilippou/ire/data/documents.txt"

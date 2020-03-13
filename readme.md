@@ -1,5 +1,31 @@
+# IRE
+
+IRE stands for "Information Retrieval" which is an AUEB's course. This implementation delivers a tool written
+entirely in Go, which handles an "Elastic Search" instance, regarding data.
+
+# Usage
+
+Thanks to Go's nature, IRE can be compiled to a single executable "ire.exe" or "ire" for *nix systems.
+To compile this use the following command
+
+`go build`
+
+### Converting AUEB provided data to JSON
+
+`ire generate json`
+
+### Inserting data to a cluster
+
+`ire feed`
+
+# Docker setup 🐋
+
+Docker compose is not implemented in this project, so you have to manually start the containers using the
+following instructions.
+
 ### Pulling the image
-Obtaining Elasticsearch for Docker is as simple as issuing a docker pull command against the Elastic Docker registry.
+
+Obtaining ElasticSearch for Docker is as simple as issuing a docker pull command against the Elastic Docker registry.
 
 `docker pull docker.elastic.co/elasticsearch/elasticsearch:7.6.1`
 
@@ -8,7 +34,9 @@ Obtaining Elasticsearch for Docker is as simple as issuing a docker pull command
 `docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.6.1`
 
 ### Running kibana for GUI searching
+
 `docker pull docker.elastic.co/kibana/kibana:7.6.1`
+
 `docker run --link YOUR_ELASTICSEARCH_CONTAINER_NAME_OR_ID:elasticsearch -p 5601:5601 {docker.elastic.co/kibana/kibana:7.6.1`
 
 #### Useful references

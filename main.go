@@ -1,22 +1,31 @@
+/*
+ * Copyright (c) 2020.
+ * Jim Filippou · jimfilippou8@gmail.com
+ */
+
 package main
 
 import (
 	"fmt"
 	"github.com/jimfilippou/ire/utils"
 	"github.com/urfave/cli"
-	"io/ioutil"
 	"log"
 	"os"
 	"time"
 )
 
 func main() {
+
+	// timeCounter is used to calculate time between operations
 	var timeCounter time.Time
+
+	// Generate the app instance
 	var app = cli.NewApp()
+
+	// Customize cli app
 	app.Name = "ire"
 	app.Usage = "Information Retrieval Project 2020"
 	app.Version = "0.0.1"
-	cli.ErrWriter = ioutil.Discard
 	app.Authors = []cli.Author{
 		{
 			Name:  "Jim Filippou",
@@ -71,4 +80,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 }

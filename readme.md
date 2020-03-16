@@ -1,4 +1,7 @@
-# IRE
+<div align="center">
+    <h3>IRE</h3>
+    <img src="ire.png" alt="ire"/>
+</div>
 
 IRE stands for "Information Retrieval" which is an AUEB's course. This implementation delivers a tool written
 entirely in Go, which handles an "Elastic Search" instance, regarding data.

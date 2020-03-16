@@ -1,10 +1,15 @@
 <div align="center">
-    <h3>IRE</h3>
-    <img src="ire.png" alt="ire"/>
+    <h1>IRE</h1>
+    <img src="ire.png" alt="ire"  style="margin-bottom: 20px;"/>
 </div>
 
-IRE stands for "Information Retrieval" which is an AUEB's course. This implementation delivers a tool written
-entirely in Go, which handles an "Elastic Search" instance, regarding data.
+IRE stands for "Information Retrieval" which is an AUEB course. This implementation delivers a tool written
+entirely in Go, which handles an "Elastic Search" instance, regarding data & indexes. 
+
+# WIP & Notice
+
+Chances are, this will not be useful to you, since it covers assignment needs, however you can use parts of the code or 
+get inspired to build something similar. Work is in progress, no stable build will ever be released because "who cares".
 
 # Usage
 

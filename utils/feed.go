@@ -12,13 +12,14 @@ import (
 	"github.com/jimfilippou/ire/models"
 	"github.com/olivere/elastic/v7"
 	log "github.com/sirupsen/logrus"
+	"github.com/urfave/cli"
 	"io/ioutil"
 	"path/filepath"
 	"reflect"
 	"time"
 )
 
-func FeedTheDB() error {
+func FeedTheDB(ctx *cli.Context) error {
 
 	fileName := filepath.Join("utils/../data", "documents.json")
 
@@ -34,12 +35,12 @@ func FeedTheDB() error {
 		return err
 	}
 
-	log.Info("Generating new elastic search client...")
+	fmt.Fprintf(ctx.App.Writer, NoticeColor, "Generating new elastic search client...\n")
 	client, err := elastic.NewSimpleClient(elastic.SetURL("http://127.0.0.1:9200"))
 	if err != nil {
 		return err
 	}
-	log.Info("Connected to elastic search!")
+	fmt.Fprintf(ctx.App.Writer, NoticeColor, "Connected to ElasticSearch!\n")
 
 	exists, err := client.IndexExists("ire").Do(context.Background())
 	if err != nil {
@@ -47,8 +48,8 @@ func FeedTheDB() error {
 	}
 
 	if !exists {
-		log.Warn("Index \"ire\" does not exist, please create it using curl. \n")
-		log.Info("curl -XPUT 'http://localhost:9200/some_index' -H 'Content-Type: application/json' -d '{}' ")
+		fmt.Fprintf(ctx.App.Writer, WarningColor, "There is no index \"ire\"\n")
+		fmt.Fprintf(ctx.App.Writer, InfoColor, "You can use this link to create an index https://github.com/jimfilippou/ire/wiki/Creating-an-index\n")
 		return nil
 	}
 

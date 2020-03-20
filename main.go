@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/jimfilippou/ire/utils"
 	"github.com/urfave/cli"
+	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -26,6 +27,7 @@ func main() {
 	app.Name = "ire"
 	app.Usage = "Information Retrieval Project 2020"
 	app.Version = "0.0.1"
+	cli.ErrWriter = ioutil.Discard
 	app.Authors = []cli.Author{
 		{
 			Name:  "Jim Filippou",
@@ -67,7 +69,7 @@ func main() {
 			Name:  "feed",
 			Usage: "Feeds the database with documents from documents.json",
 			Action: func(ctx *cli.Context) error {
-				err := utils.FeedTheDB()
+				err := utils.FeedTheDB(ctx)
 				if err != nil {
 					return err
 				}
@@ -78,6 +80,15 @@ func main() {
 			Name:  "query",
 			Usage: "Queries the database for specific string",
 			Action: func(ctx *cli.Context) error {
+
+				searchResult, err := utils.Query(ctx, "Support")
+
+				if err != nil {
+					return err
+				}
+
+				fmt.Printf("Query took %d milliseconds\n", searchResult.TookInMillis)
+
 				return nil
 			},
 		},

@@ -5,14 +5,30 @@
 
 package utils
 
-import "github.com/olivere/elastic/v7"
+import (
+	"context"
+	"github.com/olivere/elastic/v7"
+	"github.com/urfave/cli"
+)
 
-func Query(q string) (interface{}, error) {
+func Query(ctx *cli.Context, query string) (*elastic.SearchResult, error) {
 
-	_, err := elastic.NewSimpleClient(elastic.SetURL("http://127.0.0.1:9200"))
+	client, err := elastic.NewSimpleClient(elastic.SetURL("http://127.0.0.1:9200"))
 	if err != nil {
 		return nil, err
 	}
 
-	return nil, nil
+	matchQuery := elastic.NewMatchQuery("Text", query)
+
+	searchResult, err := client.Search().
+		Index("ire").            // search in index "twitter"
+		Query(matchQuery).       // specify the query
+		Pretty(true).            // pretty print request and response JSON
+		Do(context.Background()) // execute
+
+	if err != nil {
+		return nil, err
+	}
+
+	return searchResult, nil
 }

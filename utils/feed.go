@@ -21,6 +21,11 @@ import (
 
 func FeedTheDB(ctx *cli.Context) error {
 
+	config, err := models.NewConfiguration(filepath.Join("utils/../", "configuration.json"))
+	if err != nil {
+		return err
+	}
+
 	fileName := filepath.Join("utils/../data", "documents.json")
 
 	var nodes []models.Node
@@ -35,12 +40,12 @@ func FeedTheDB(ctx *cli.Context) error {
 		return err
 	}
 
-	fmt.Fprintf(ctx.App.Writer, NoticeColor, "Generating new elastic search client...\n")
-	client, err := elastic.NewSimpleClient(elastic.SetURL("http://127.0.0.1:9200"))
+	_, _ = fmt.Fprintf(ctx.App.Writer, NoticeColor, "Generating new elastic search client...\n")
+	client, err := elastic.NewSimpleClient(elastic.SetURL(config.ElasticSearchInstance))
 	if err != nil {
 		return err
 	}
-	fmt.Fprintf(ctx.App.Writer, NoticeColor, "Connected to ElasticSearch!\n")
+	_, _ = fmt.Fprintf(ctx.App.Writer, NoticeColor, "Connected to ElasticSearch!\n")
 
 	exists, err := client.IndexExists("ire").Do(context.Background())
 	if err != nil {
@@ -48,8 +53,8 @@ func FeedTheDB(ctx *cli.Context) error {
 	}
 
 	if !exists {
-		fmt.Fprintf(ctx.App.Writer, WarningColor, "There is no index \"ire\"\n")
-		fmt.Fprintf(ctx.App.Writer, InfoColor, "You can use this link to create an index https://github.com/jimfilippou/ire/wiki/Creating-an-index\n")
+		_, _ = fmt.Fprintf(ctx.App.Writer, WarningColor, "There is no index \"ire\"\n")
+		_, _ = fmt.Fprintf(ctx.App.Writer, InfoColor, "You can use this link to create an index https://github.com/jimfilippou/ire/wiki/Creating-an-index\n")
 		return nil
 	}
 

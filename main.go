@@ -74,6 +74,13 @@ func main() {
 				return nil
 			},
 		},
+		{
+			Name:  "query",
+			Usage: "Queries the database for specific string",
+			Action: func(ctx *cli.Context) error {
+				return nil
+			},
+		},
 	}
 
 	err := app.Run(os.Args)

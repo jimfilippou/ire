@@ -10,6 +10,7 @@ import (
 	"github.com/jimfilippou/ire/models"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -51,8 +52,8 @@ func getNodes(data []byte) []models.Node {
 //	in order to make them accessible to the "Feed" utility.
 func CreateFile() error {
 
-	fileName := "/Users/jimfilippou/go/src/github.com/jimfilippou/ire/data/documents.txt"
-	outputFi := "/Users/jimfilippou/go/src/github.com/jimfilippou/ire/data/documents.json"
+	fileName := filepath.Join("utils/../data", "documents.txt")
+	outputFi := filepath.Join("utils/../data", "documents.json")
 
 	err := checkFile(fileName)
 	if err != nil {

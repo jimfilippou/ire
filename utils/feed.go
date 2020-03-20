@@ -13,13 +13,15 @@ import (
 	"github.com/olivere/elastic/v7"
 	log "github.com/sirupsen/logrus"
 	"io/ioutil"
+	"path/filepath"
 	"reflect"
 	"time"
 )
 
 func FeedTheDB() error {
 
-	fileName := "/Users/jimfilippou/go/src/github.com/jimfilippou/ire/data/documents.json"
+	fileName := filepath.Join("utils/../data", "documents.json")
+
 	var nodes []models.Node
 
 	file, err := ioutil.ReadFile(fileName)

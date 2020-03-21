@@ -9,11 +9,37 @@ import (
 	"context"
 	"github.com/olivere/elastic/v7"
 	"github.com/urfave/cli"
+	"io/ioutil"
+	"path/filepath"
+	"strings"
 )
+
+func fetchQueries(path string) ([]string, error) {
+
+	fileName, err := filepath.Abs(path)
+	if err != nil {
+		return nil, err
+	}
+
+	file, err := ioutil.ReadFile(fileName)
+	if err != nil {
+		return nil, err
+	}
+
+	topLevelTokens := strings.Split(string(file), "///")
+
+	return topLevelTokens, nil
+
+}
 
 func Query(ctx *cli.Context, queriesPath string) (*elastic.SearchResult, error) {
 
 	client, err := elastic.NewSimpleClient(elastic.SetURL("http://127.0.0.1:9200"))
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = fetchQueries(queriesPath)
 	if err != nil {
 		return nil, err
 	}

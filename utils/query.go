@@ -11,20 +11,22 @@ import (
 	"github.com/urfave/cli"
 )
 
-func Query(ctx *cli.Context, query string) (*elastic.SearchResult, error) {
+func Query(ctx *cli.Context, queriesPath string) (*elastic.SearchResult, error) {
 
 	client, err := elastic.NewSimpleClient(elastic.SetURL("http://127.0.0.1:9200"))
 	if err != nil {
 		return nil, err
 	}
 
-	matchQuery := elastic.NewMatchQuery("Text", query)
+	// TODO: Read queries file, iterate through queries & perform them
+	matchQuery := elastic.NewMatchQuery("Text", "query")
 
+	// This line is too JavaScripty, why the fuck did you make it like this?
 	searchResult, err := client.Search().
-		Index("ire").            // search in index "twitter"
-		Query(matchQuery).       // specify the query
-		Pretty(true).            // pretty print request and response JSON
-		Do(context.Background()) // execute
+		Index("ire").
+		Query(matchQuery).
+		Pretty(true).
+		Do(context.Background())
 
 	if err != nil {
 		return nil, err

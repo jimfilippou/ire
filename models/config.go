@@ -17,14 +17,18 @@ type Configuration struct {
 }
 
 func NewConfiguration(path string) (*Configuration, error) {
+
 	var conf Configuration
+
 	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
+
 	err = json.Unmarshal(file, &conf)
 	if err != nil {
 		return nil, err
 	}
 	return &conf, nil
+
 }

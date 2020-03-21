@@ -78,18 +78,24 @@ func main() {
 		},
 		{
 			Name:  "query",
-			Usage: "Queries the database for specific string",
+			Usage: "Queries the database for given input file",
+			Flags: []cli.Flag{
+				&cli.StringFlag{
+					Name:     "queries",
+					Usage:    "Load queries from `FILE`",
+					Required: true,
+				},
+			},
 			Action: func(ctx *cli.Context) error {
 
-				searchResult, err := utils.Query(ctx, "Support")
-
+				searchResult, err := utils.Query(ctx, ctx.String("queries"))
 				if err != nil {
 					return err
 				}
 
 				fmt.Printf("Query took %d milliseconds\n", searchResult.TookInMillis)
-
 				return nil
+
 			},
 		},
 	}

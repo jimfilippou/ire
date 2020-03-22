@@ -11,9 +11,6 @@ import (
 	"github.com/urfave/cli"
 	"io/ioutil"
 	"strings"
-	"io/ioutil"
-	"path/filepath"
-	"strings"
 )
 
 // This function is devoted 100% for my friend Artemis

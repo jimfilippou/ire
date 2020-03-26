@@ -88,12 +88,13 @@ func main() {
 			},
 			Action: func(ctx *cli.Context) error {
 
-				searchResult, err := utils.Query(ctx, ctx.String("queries"))
+				searchResults, err := utils.Query(ctx, ctx.String("queries"))
 				if err != nil {
 					return err
 				}
 
-				fmt.Printf("Query took %d milliseconds\n", searchResult.TookInMillis)
+				fmt.Fprintf(ctx.App.Writer, "Results are stored in %p:\n", searchResults)
+
 				return nil
 
 			},

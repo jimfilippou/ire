@@ -33,7 +33,7 @@ func fetchQueries(path string) ([]string, error) {
 
 }
 
-func Query(ctx *cli.Context, queriesPath string) ([]*elastic.SearchResult, error) {
+func Query(ctx *cli.Context, queriesPath string) ([][]*elastic.SearchResult, error) {
 
 	client, err := elastic.NewSimpleClient(elastic.SetURL("http://127.0.0.1:9200"))
 	if err != nil {
@@ -45,25 +45,33 @@ func Query(ctx *cli.Context, queriesPath string) ([]*elastic.SearchResult, error
 		return nil, err
 	}
 
-	var results []*elastic.SearchResult
+	samples := []int{20, 30, 50}
 
-	for _, query := range queries {
+	contents := [][]*elastic.SearchResult{nil, nil, nil}
 
-		matchQuery := elastic.NewMatchQuery("Text", query)
+	for index, limit := range samples {
 
-		// This line is too JavaScripty, why the fuck did you make it like this?
-		searchResult, err := client.Search().
-			Index("ire").
-			Query(matchQuery).
-			Pretty(true).
-			Do(context.Background())
-		if err != nil {
-			return nil, err
+		for _, query := range queries {
+
+			matchQuery := elastic.NewMatchQuery("Text", query)
+
+			// This line is too JavaScripty, why the fuck did you make it like this?
+			searchResult, err := client.Search().
+				Index("ire").
+				Query(matchQuery).
+				From(0).Size(limit).
+				Do(context.Background())
+			if err != nil {
+				return nil, err
+			}
+
+			contents[index] = append(contents[index], searchResult)
+
 		}
 
-		results = append(results, searchResult)
-
 	}
+
+	results := [][]*elastic.SearchResult{contents[0], contents[1], contents[2]}
 
 	return results, nil
 

@@ -93,6 +93,21 @@ func main() {
 					return err
 				}
 
+				// Experiment 20
+				for index, item := range searchResults[0] {
+					for j, res := range item.Hits.Hits {
+						var x = index + 1
+						var y = j + 1
+						var pretty string = ""
+						if x < 10 {
+							pretty = "Q0"
+						} else {
+							pretty = "Q"
+						}
+						fmt.Fprintf(ctx.App.Writer, "%s%d 0 %s %d %f standard\n", pretty, x, res.Id, y, *res.Score)
+					}
+				}
+
 				fmt.Fprintf(ctx.App.Writer, "Results are stored in %p:\n", searchResults)
 
 				return nil

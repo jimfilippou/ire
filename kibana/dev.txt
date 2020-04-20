@@ -1,3 +1,5 @@
+DELETE ire
+
 GET ire
 
 GET ire/_analyze
@@ -9,6 +11,37 @@ PUT ire
 {
   "settings": {
     "number_of_shards": 1,
-    "number_of_replicas": 1
+    "number_of_replicas": 1,
+    "analysis": {
+      "analyzer": {
+        "default":{
+          "type":"custom",
+          "tokenizer":"classic",
+          "filter":[
+            "lowercase",
+            "custom_stem",
+            "stops"
+          ]
+        }
+      },
+      "filter":{
+          "stops":{
+            "type":"stop",
+            "stopwords":"_english_"
+          },
+          "custom_stem":{
+            "type":"stemmer",
+            "name":"english"
+          }
+        }
+    }
+  },
+  "mappings":{
+      "properties":{
+        "text":{
+          "type":"text",
+          "analyzer":"default"
+        }
+      }
   }
 }

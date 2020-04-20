@@ -1,0 +1,14 @@
+GET ire
+
+GET ire/_analyze
+{
+  "text":"ThiS is My Test a great one at that really greats big proposed proposals"
+}
+
+PUT ire
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 1
+  }
+}

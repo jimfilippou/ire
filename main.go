@@ -93,8 +93,7 @@ func main() {
 					return err
 				}
 
-				// Experiment 20
-				for index, item := range searchResults[0] {
+				for index, item := range searchResults[2] {
 					for j, res := range item.Hits.Hits {
 						var x = index + 1
 						var y = j + 1
